@@ -22,6 +22,7 @@ internal sealed class Complete : IEndpoint
             return result.Match(Results.NoContent, CustomResults.Problem);
         })
         .WithTags(Tags.Todos)
+        .Produces(StatusCodes.Status204NoContent)
         .RequireAuthorization();
     }
 }

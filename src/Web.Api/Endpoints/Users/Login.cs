@@ -25,6 +25,7 @@ internal sealed class Login : IEndpoint
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Users)
+        .Produces<AccessTokensResponse>()
         .RequireRateLimiting(RateLimitingPolicies.Authentication);
     }
 }

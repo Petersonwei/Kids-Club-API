@@ -28,6 +28,7 @@ internal sealed class Register : IEndpoint
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Users)
+        .Produces<Guid>()
         .RequireRateLimiting(RateLimitingPolicies.Authentication);
     }
 }
