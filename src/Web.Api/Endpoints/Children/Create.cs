@@ -13,6 +13,8 @@ internal sealed class Create : IEndpoint
         public string Name { get; set; } = string.Empty;
     }
 
+    public sealed record CreateResponse(Guid Id);
+
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("children", async (
@@ -24,10 +26,12 @@ internal sealed class Create : IEndpoint
 
             Result<Guid> result = await handler.Handle(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.Match(
+                id => Results.Ok(new CreateResponse(id)),
+                CustomResults.Problem);
         })
         .WithTags(Tags.Children)
-        .Produces<Guid>()
+        .Produces<CreateResponse>()
         .RequireAuthorization();
     }
 }
